@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>User update</title>
+</head>
+<body>
+<form action="#" th:action="@{/admin/user-update}" th:object="${user}" method="post">
+    <label for="id">ID</label>
+    <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">
+    <br/>
+    <label for="name">name</label>
+    <input type="text" th:field="*{name}" id="name" placeholder="name">
+    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error Name</div>
+    <br/>
+    <label for="second_Name">second_name</label>
+    <input type="text" th:field="*{second_name}" id="second_Name" placeholder="second_Name">
+    <div style="color: red" th:if="${#fields.hasErrors('second_name')}" th:errors="*{second_name}">Error Name</div>
+    <br/>
+    <label for="age">age</label>
+    <input type="text" th:field="*{age}" id="age" placeholder="age">
+    <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Error Age</div>
+    <label for="age">second_name</label>
+    <input type="text" th:field="*{email}" id="email" placeholder="email">
+    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error Email</div>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label mb-0">Password</label>
+        <input type="password" class="form-control" id="password" th:field="*{password}"/>
+    </div>
+    <label for="role">Roles:</label>
+    <select multiple="multiple" th:field="*{roles}"
+            type="text" id="role">
+        <option th:each="role : ${roles}" th:value="${role.getId()}" th:text="${
+        role.getAuthority().replaceFirst('ROLE_', '')}"></option>
+
+    </select>
+
+    <input type="submit" value="Update">
+
+</form>
+</body>
+</html>

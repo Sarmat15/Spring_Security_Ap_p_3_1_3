@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${'Admin panel'}"></title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+</head>
+<body>
+<div class="header-page">
+    <h1 th:text="${admin.getEmail + ' , welcome from admin panel!'}"></h1>
+</div>
+<div class="content-page">
+    <div class="block-list-left">
+        <div class="block-list-left-menu-buttom">
+            <a th:href="@{/user/}">User page</a>
+        </div>
+        <div class="block-list-left-menu-buttom">
+            <a th:href="@{/admin/}">Admin page</a>
+        </div>
+    </div>
+    <div class="block-content">
+        <div th:switch="${users}">
+            <h2 th:case="null">No users found!</h2>
+            <div th:case="*">
+                <h2>Users</h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>name</th>
+                        <th>second_name</th>
+                        <th>age</th>
+                        <th>email</th>
+                        <th>password</th>
+                        <th>Roles</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.id}"></td>
+                        <td th:text="${user.name}"></td>
+                        <td th:text="${user.second_name}"></td>
+                        <td th:text="${user.age}"></td>
+                        <td th:text="${user.email}"></td>
+                        <td th:utext="${user.password}"></td>
+                        <td><p th:each=" role : ${user.getRoles()}" th:text="${role.getAuthority().replaceFirst('ROLE_', '')}"></p></td>
+                        <td><a th:href="@{/admin/user-update/{id}(id=${user.id})}">Edit</a></td>
+                        <td><a th:href="@{/admin/user-delete/{id}(id=${user.id})}">Delete</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p><a href="/admin/user-create">Create user</a></p>
+            <br> <br>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Sign Out</button>
+            </form>
+        </div>
+</body>
+</html>
